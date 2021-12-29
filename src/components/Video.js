@@ -20,7 +20,7 @@ const Video = () => {
     }, [state.room]);
   
     useEffect(() => {
-        if(state.remoteParticipantTracks){
+        if(state.remoteParticipantTracks && state.remoteParticipant.videoTracks){
             const remoteVideoTrack = [...state.remoteParticipant.videoTracks.values()][0];
             console.log(JSON.stringify(remoteVideoTrack));
             console.log(remoteVideoTrack);
@@ -31,7 +31,7 @@ const Video = () => {
                 trackRefLocal.current.appendChild(child2);
             }
         }
-    }, [state.remoteParticipantTracks, state.remoteParticipant.videoTracks]);
+    }, [state.remoteParticipantTracks, state.remoteParticipant?.videoTracks]);
 
 
     return (
