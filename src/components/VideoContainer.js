@@ -6,7 +6,7 @@ import Patient from "./Patient";
 import AppStateContext from '../AppStateContext'
 
 const VideoContainer = () => {
-    const [state, dispatch] = useContext(AppStateContext);
+    const [state] = useContext(AppStateContext);
 
     return ReactDom.createPortal(
         <div className="video-container-overlay">

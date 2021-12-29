@@ -1,12 +1,12 @@
-import React, { useContext, useRef, useEffect, useState } from "react"
+import React, { useContext, useRef, useEffect } from "react"
 import AppStateContext from '../AppStateContext'
 
 const Video = () => {
     const trackRefRemote = useRef();
     const trackRefLocal = useRef();
-    const [state, _] = useContext(AppStateContext);
+    const [state] = useContext(AppStateContext);
 
-    const l = state.room?.localParticipant;
+    //const l = state.room?.localParticipant;
     
   
     useEffect(() => {
@@ -31,7 +31,7 @@ const Video = () => {
                 trackRefLocal.current.appendChild(child2);
             }
         }
-    }, [state.remoteParticipantTracks]);
+    }, [state.remoteParticipantTracks, state.remoteParticipant.videoTracks]);
 
 
     return (
