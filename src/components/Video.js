@@ -4,8 +4,7 @@ import AppStateContext from '../AppStateContext'
 const Video = () => {
     const trackRefRemote = useRef();
     const trackRefLocal = useRef();
-    const [state, dispatch] = useContext(AppStateContext);
-    const [localVideoTrack, setLocalVideoTrack] = useState(null);
+    const [state, _] = useContext(AppStateContext);
 
     const l = state.room?.localParticipant;
     
@@ -18,14 +17,14 @@ const Video = () => {
             trackRefRemote.current.classList.add(remoteVideoTrack.kind);
             trackRefRemote.current.appendChild(child);
         }
-    }, [l]);
+    }, [state.room]);
   
     useEffect(() => {
         if(state.remoteParticipantTracks){
             const remoteVideoTrack = [...state.remoteParticipant.videoTracks.values()][0];
             console.log(JSON.stringify(remoteVideoTrack));
             console.log(remoteVideoTrack);
-            console.log(state);
+            //console.log(state);
             if(remoteVideoTrack){
                 const child2 = remoteVideoTrack.track.attach();
                 trackRefLocal.current.classList.add(remoteVideoTrack.kind);

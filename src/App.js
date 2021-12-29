@@ -1,4 +1,4 @@
-import React, { useState, useContext, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import './App.css';
 import Home from './Home';
 import AppStateContext from './AppStateContext'
@@ -25,7 +25,7 @@ function reducer(state, action) {
       
         return { ...state, remoteParticipantTracks:[...state.remoteParticipantTracks, action.payload.remoteParticipantTrack]};
     case ACTION_TYPE.REMOVE_REMOTE_PARTICIPANT_TRACKS:
-      return { ...state, remoteParticipantTracks:state.remoteParticipantTracks.filter(r => r != action.payload.remoteParticipantTracks)};
+      return { ...state, remoteParticipantTracks:state.remoteParticipantTracks.filter(r => r !== action.payload.remoteParticipantTracks)};
     case ACTION_TYPE.CLOSE_VIDEO:
       return { ...state, startVideo:false};
     case ACTION_TYPE.REMOTE_PARTICIPANT_CONNECTED:
