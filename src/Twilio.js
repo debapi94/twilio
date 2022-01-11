@@ -2,8 +2,9 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import {
   connect,
+  createLocalTracks,
   LocalAudioTrack,
-  //LocalDataTrack,
+  LocalDataTrack,
   LocalVideoTrack,
 } from "twilio-video";
 
@@ -46,12 +47,13 @@ export const connectToRoom = async (
 
       // create data track for messages
       const audioTrack = new LocalAudioTrack(stream.getAudioTracks()[0]);
+      const dataTrack = new LocalDataTrack();
 
       let videoTrack;
 
       if (!onlyWithAudio) {
         videoTrack = new LocalVideoTrack(stream.getVideoTracks()[0]);
-        tracks = [audioTrack, videoTrack];
+        tracks = [audioTrack, videoTrack, dataTrack];
       } else {
         tracks = [audioTrack];
       }
@@ -62,7 +64,7 @@ export const connectToRoom = async (
       });
       console.log("succesfully connected with twilio room");
       //console.log(room);
-      return room;
+      return {room, dataTrack};
       //store.dispatch(setShowOverlay(false));
     })
     .catch((err) => {
@@ -76,6 +78,20 @@ export const connectToRoom = async (
 export const checkIfRoomExists = async (roomId) => {
   const response = await axios.get(
     `https://cm2-twilio-video-poc-5184-dev.twil.io/room-exists?roomId=${roomId}`
+  );
+
+  return response.data.roomExists;
+};
+
+export const getLocalVideoTracks = async () => {
+  const tracks = await createLocalTracks();
+  return tracks.find(track => track.kind === 'video');
+}
+
+
+export const startRecording = async (roomId) => {
+  const response = await axios.get(
+    `https://video.twilio.com/v1/Rooms/${roomId}`
   );
 
   return response.data.roomExists;
